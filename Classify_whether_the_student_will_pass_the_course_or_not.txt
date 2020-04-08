@@ -1,0 +1,65 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import seaborn as sns
+from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import confusion_matrix
+from sklearn.model_selection import train_test_split
+
+data=pd.read_csv("My_data.csv")
+data.head()
+
+data.info()
+
+sum(data.duplicated())
+
+allcolumns=data.columns
+for item in allcolumns:
+    print(data[item].nunique())
+
+correl=data.corr()
+print(correl)
+
+data.fillna(data.mean(),axis=0,inplace=True)
+
+x=data.drop(["Grade","RegdNo","Termid","Course","MHRDName","Height","Weight","ScholarType","CA_1","CA_2","CA_3","CA_4","Direction","Gender","Medium","CourseType","ProgramType"],axis=1)
+y=data["Grade"]
+print(x)
+print(y)
+
+mark_mapping={'O':0,'A+':1,'A':2,'B+':3,'B':4,'C':5,'D':6,'E':7,'F':8,'M':9,'I':10,'R':11}
+y=y.replace(mark_mapping)
+print(y)
+
+y = y.astype(np.uint)
+
+x_train, x_test, y_train, y_test = train_test_split(x,y, test_size=0.3, random_state=101)
+scale=StandardScaler()
+x_train=scale.fit_transform(x_train)
+print(x_train)
+
+x_test=scale.fit_transform(x_test)
+model = LogisticRegression()
+model.fit(x_train, y_train)
+
+predictedvalues=model.predict(x_test)
+print(accuracy_score(y_test,predictedvalues))
+
+score_mapping = {mark_mapping[i]:i for i in mark_mapping}
+final=score_mapping[model.predict(x.values[0].reshape(-1,6))[0]]
+
+print("Final grade is ")
+print(final)
+
+Pass_garde=['O','A','A+','B','B+','C','D']
+if(final in Pass_garde):
+    print("PASS")
+else :
+    print("FAIL")
+
