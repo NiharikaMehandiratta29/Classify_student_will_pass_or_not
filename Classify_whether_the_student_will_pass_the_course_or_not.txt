@@ -56,6 +56,7 @@ model = LogisticRegression()
 model.fit(x_train, y_train)
 predictedvalues=model.predict(x_test)
 print(accuracy_score(y_test,predictedvalues))
+print(confusion_matrix(y_test,predictedvalues))
 
 
 ******PREDICTION BY RANDOM FOREST CLASSIFIER METHOD******
@@ -63,6 +64,7 @@ model = RandomForestClassifier()
 model.fit(x_train, y_train)
 predictedvalues=model.predict(x_test)
 print(accuracy_score(y_test,predictedvalues))
+print(confusion_matrix(y_test,predictedvalues))
 
 
 ******PREDICTION BY ADABOOST CLASSIFIER METHOD******
@@ -70,12 +72,14 @@ model = AdaBoostClassifier()
 model.fit(x_train, y_train)
 predictedvalues=model.predict(x_test)
 print(accuracy_score(y_test,predictedvalues))
+print(confusion_matrix(y_test,predictedvalues))
 
 ******PREDICTION BY GRADIENT BOOSTING CLASSIFIER METHOD******
 model = GradientBoostingClassifier()
 model.fit(x_train, y_train)
 predictedvalues=model.predict(x_test)
 print(accuracy_score(y_test,predictedvalues))
+print(confusion_matrix(y_test,predictedvalues))
 
 ******CLASSIFICATION WHETHER THE STUDENT WILL PASS OR NOT******
 score_mapping = {mark_mapping[i]:i for i in mark_mapping}
